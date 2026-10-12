@@ -277,6 +277,54 @@ def show_favorites(prompts):
     print(f"\n총 {len(favorites)}개의 즐겨찾기")
 
 
+
+def input_optional(label, current):
+    """엔터만 누르면 현재 값을 유지하고, 입력하면 새 값을 반환한다."""
+    preview = current.replace("\n", " ")
+    if len(preview) > 30:
+        preview = preview[:30] + "..."
+    value = input(f"{label} [{preview}]: ").strip()
+    return value if value else current
+
+
+def edit_prompt(prompts):
+    """번호로 선택한 프롬프트의 제목/내용/카테고리를 수정한다."""
+    print("=== 프롬프트 수정 ===")
+    print_prompt_lines(numbered(prompts))
+    print()
+    index = input_prompt_index(prompts, "수정할 번호 입력: ")
+    if index is None:
+        return
+
+    prompt = prompts[index]
+    print("(변경하지 않을 항목은 엔터만 누르세요)")
+    prompt["title"] = input_optional("제목", prompt["title"])
+    prompt["content"] = input_optional("내용", prompt["content"])
+
+    if input("카테고리를 변경할까요? (y/N): ").strip().lower() == "y":
+        prompt["category"] = select_category(prompts)
+
+    print(f"\n'{prompt['title']}' 프롬프트가 수정되었습니다!")
+
+
+def delete_prompt(prompts):
+    """번호로 선택한 프롬프트를 확인 후 삭제한다."""
+    print("=== 프롬프트 삭제 ===")
+    print_prompt_lines(numbered(prompts))
+    print()
+    index = input_prompt_index(prompts, "삭제할 번호 입력: ")
+    if index is None:
+        return
+
+    title = prompts[index]["title"]
+    if input(f"'{title}' 프롬프트를 삭제할까요? (y/N): ").strip().lower() != "y":
+        print("삭제를 취소했습니다.")
+        return
+
+    prompts.pop(index)
+    print(f"'{title}' 프롬프트를 삭제했습니다.")
+
+
 # ──────────────────────────────────────────
 # 메뉴 / 메인
 # ──────────────────────────────────────────
@@ -300,6 +348,8 @@ def get_menu_items():
         ("5", "프롬프트 상세 보기", show_detail),
         ("6", "즐겨찾기 관리", toggle_favorite),
         ("7", "즐겨찾기 목록", show_favorites),
+        ("8", "프롬프트 수정", edit_prompt),
+        ("9", "프롬프트 삭제", delete_prompt),
     ]
 
 

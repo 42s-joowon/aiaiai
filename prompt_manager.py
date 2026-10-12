@@ -264,6 +264,19 @@ def toggle_favorite(prompts):
         print(f"'{prompt['title']}' 프롬프트를 즐겨찾기에서 해제했습니다.")
 
 
+
+def show_favorites(prompts):
+    """즐겨찾기된 프롬프트만 모아서 출력한다."""
+    print("=== 즐겨찾기 목록 ===")
+    favorites = [(n, p) for n, p in numbered(prompts) if p["favorite"]]
+    if not favorites:
+        print("즐겨찾기한 프롬프트가 없습니다. '즐겨찾기 관리'에서 추가해보세요.")
+        return
+
+    print_prompt_lines(favorites)
+    print(f"\n총 {len(favorites)}개의 즐겨찾기")
+
+
 # ──────────────────────────────────────────
 # 메뉴 / 메인
 # ──────────────────────────────────────────
@@ -286,6 +299,7 @@ def get_menu_items():
         ("4", "프롬프트 검색", search_prompt),
         ("5", "프롬프트 상세 보기", show_detail),
         ("6", "즐겨찾기 관리", toggle_favorite),
+        ("7", "즐겨찾기 목록", show_favorites),
     ]
 
 

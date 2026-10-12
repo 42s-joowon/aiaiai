@@ -168,6 +168,30 @@ def show_list(prompts):
     print(f"\n총 {len(prompts)}개의 프롬프트")
 
 
+
+def show_by_category(prompts):
+    """카테고리를 선택하면 해당 카테고리의 프롬프트만 출력한다."""
+    print("=== 카테고리별 조회 ===")
+    categories = get_categories(prompts)
+    print_categories(categories)
+
+    choice = input("선택: ").strip()
+    if not (choice.isdigit() and 1 <= int(choice) <= len(categories)):
+        print("잘못된 번호입니다. 메뉴로 돌아갑니다.")
+        return
+
+    category = categories[int(choice) - 1]
+    results = [(n, p) for n, p in numbered(prompts) if p["category"] == category]
+
+    print(f"\n[{category}] 카테고리 프롬프트:")
+    if not results:
+        print("이 카테고리에 등록된 프롬프트가 없습니다.")
+        return
+
+    print_prompt_lines(results)
+    print(f"\n총 {len(results)}개의 프롬프트")
+
+
 # ──────────────────────────────────────────
 # 메뉴 / 메인
 # ──────────────────────────────────────────
@@ -186,6 +210,7 @@ def get_menu_items():
     return [
         ("1", "프롬프트 추가", add_prompt),
         ("2", "프롬프트 목록", show_list),
+        ("3", "카테고리별 조회", show_by_category),
     ]
 
 

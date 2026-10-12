@@ -88,7 +88,28 @@ git log --oneline --graph
 
 `feature/prompt-list`, `feature/bonus` 브랜치가 갈라졌다가 병합된 그래프가 보이면 됩니다.
 
-## 5. 제출물 체크리스트
+## 5. 클라우드 환경에서 찍은 터미널 스크린샷
+
+Claude Code 클라우드 환경의 터미널에서 실제로 명령어와 프로그램을 실행해 찍은 화면이 [`docs/screenshots/`](screenshots/)에 있습니다.
+
+| 파일 | 내용 |
+|---|---|
+| [01_env.png](screenshots/01_env.png) | `python3 --version`, `hello.py` 실행, `git --version`, Git 사용자 정보·기본 브랜치(main), 원격 저장소 |
+| [02_menu.png](screenshots/02_menu.png) | 메뉴 화면 |
+| [03_add.png](screenshots/03_add.png) | 프롬프트 추가 |
+| [04_list.png](screenshots/04_list.png) | 프롬프트 목록 |
+| [05_category.png](screenshots/05_category.png) | 카테고리별 조회 |
+| [06_search.png](screenshots/06_search.png) | 프롬프트 검색 |
+| [07_detail.png](screenshots/07_detail.png) | 프롬프트 상세 보기 |
+| [08_favorite.png](screenshots/08_favorite.png) | 즐겨찾기 추가 + 즐겨찾기 목록 |
+| [09_invalid_exit.png](screenshots/09_invalid_exit.png) | 잘못된 번호 안내 + 종료 |
+| [10_bonus.png](screenshots/10_bonus.png) | 보너스: 조회수 TOP 5, JSON 저장, Markdown 내보내기 |
+| [11_git_log.png](screenshots/11_git_log.png) | `git log --oneline --graph` |
+
+> 이 환경의 Git 사용자 정보는 클라우드 환경 기본값(Claude)이고, VSCode 화면(확장 설치, GitHub 로그인)은 클라우드 터미널에서 찍을 수 없습니다.
+> 제출 규정상 **본인 PC의 VSCode 화면과 본인 Git 설정**이 필요하다면 1절 순서대로 직접 캡처해 교체하세요.
+
+## 6. 제출물 체크리스트
 
 - [ ] GitHub 저장소 URL: `https://github.com/42s-joowon/aiaiai`
 - [ ] 개발 환경 설정 스크린샷 (VSCode, Python 버전, Git 설정)
@@ -97,7 +118,7 @@ git log --oneline --graph
 
 ---
 
-## 6. 학습 정리
+## 7. 학습 정리
 
 ### Git이란? 왜 필요한가?
 

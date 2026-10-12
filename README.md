@@ -50,6 +50,22 @@ VSCode에서는 `prompt_manager.py`를 연 뒤 오른쪽 위 ▶(Run Python File
 - 모든 기능은 수행 후 메뉴로 돌아옵니다.
 - 카테고리 조회·검색·즐겨찾기 결과에도 **전체 목록 기준 번호**를 표시하므로, 그 번호로 바로 상세 보기를 할 수 있습니다.
 
+## 실행 화면
+
+| 메뉴 | 프롬프트 추가 |
+|---|---|
+| ![메뉴](docs/screenshots/02_menu.png) | ![추가](docs/screenshots/03_add.png) |
+| **프롬프트 목록** | **카테고리별 조회** |
+| ![목록](docs/screenshots/04_list.png) | ![카테고리](docs/screenshots/05_category.png) |
+| **프롬프트 검색** | **상세 보기** |
+| ![검색](docs/screenshots/06_search.png) | ![상세](docs/screenshots/07_detail.png) |
+| **즐겨찾기 관리 / 목록** | **잘못된 입력 / 종료** |
+| ![즐겨찾기](docs/screenshots/08_favorite.png) | ![종료](docs/screenshots/09_invalid_exit.png) |
+| **보너스: TOP 5 / JSON / Markdown** | **git log --oneline --graph** |
+| ![보너스](docs/screenshots/10_bonus.png) | ![git log](docs/screenshots/11_git_log.png) |
+
+개발 환경(Python·Git 버전, Git 설정) 확인 화면: [docs/screenshots/01_env.png](docs/screenshots/01_env.png)
+
 ## 프롬프트 카테고리
 
 | 카테고리 | 설명 | 기본 등록 프롬프트 |

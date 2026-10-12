@@ -74,6 +74,76 @@ def create_default_prompts():
     ]
 
 
+# ──────────────────────────────────────────
+# 입력 도우미 함수
+# ──────────────────────────────────────────
+
+def input_required(label):
+    """빈 값이 아닌 입력을 받을 때까지 반복해서 묻는다."""
+    while True:
+        value = input(label).strip()
+        if value:
+            return value
+        print("값이 비어 있습니다. 다시 입력해주세요.")
+
+
+def get_categories(prompts):
+    """기본 카테고리 + 사용자가 직접 입력한 카테고리 목록을 반환한다."""
+    categories = list(CATEGORIES)
+    for prompt in prompts:
+        if prompt["category"] not in categories:
+            categories.append(prompt["category"])
+    return categories
+
+
+def print_categories(categories):
+    """카테고리 목록을 번호와 함께 출력한다."""
+    for index, category in enumerate(categories, start=1):
+        print(f"{index}) {category}")
+
+
+def select_category(prompts):
+    """카테고리를 번호로 선택하거나 직접 입력받아 반환한다."""
+    categories = get_categories(prompts)
+    custom_number = len(categories) + 1
+
+    print("\n카테고리 선택:")
+    print_categories(categories)
+    print(f"{custom_number}) 직접 입력")
+
+    while True:
+        choice = input_required("선택: ")
+        if choice.isdigit() and 1 <= int(choice) <= len(categories):
+            return categories[int(choice) - 1]
+        if choice == str(custom_number):
+            return input_required("새 카테고리 이름: ")
+        print(f"1~{custom_number} 사이의 번호를 입력해주세요.")
+
+
+# ──────────────────────────────────────────
+# 기능 함수
+# ──────────────────────────────────────────
+
+def add_prompt(prompts):
+    """새 프롬프트를 입력받아 목록에 추가한다."""
+    print("=== 프롬프트 추가 ===")
+    title = input_required("제목: ")
+    content = input_required("내용: ")
+    category = select_category(prompts)
+
+    prompts.append({
+        "title": title,
+        "content": content,
+        "category": category,
+        "favorite": False,
+    })
+    print("\n프롬프트가 추가되었습니다!")
+
+
+# ──────────────────────────────────────────
+# 메뉴 / 메인
+# ──────────────────────────────────────────
+
 def show_menu(menu_items):
     """메인 메뉴를 출력한다."""
     print()
@@ -85,7 +155,9 @@ def show_menu(menu_items):
 
 def get_menu_items():
     """(번호, 메뉴 이름, 실행할 함수) 목록을 반환한다."""
-    return []
+    return [
+        ("1", "프롬프트 추가", add_prompt),
+    ]
 
 
 def main():

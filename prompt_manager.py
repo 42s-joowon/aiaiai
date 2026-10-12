@@ -140,6 +140,34 @@ def add_prompt(prompts):
     print("\n프롬프트가 추가되었습니다!")
 
 
+def format_prompt_line(number, prompt):
+    """목록 한 줄 형식: '번호. [카테고리] 제목 ⭐'"""
+    star = " ⭐" if prompt["favorite"] else ""
+    return f"{number}. [{prompt['category']}] {prompt['title']}{star}"
+
+
+def print_prompt_lines(numbered_prompts):
+    """(번호, 프롬프트) 목록을 한 줄씩 출력한다."""
+    for number, prompt in numbered_prompts:
+        print(format_prompt_line(number, prompt))
+
+
+def numbered(prompts):
+    """프롬프트마다 전체 목록 기준 번호(1부터)를 붙여 반환한다."""
+    return list(enumerate(prompts, start=1))
+
+
+def show_list(prompts):
+    """저장된 모든 프롬프트를 번호와 함께 출력한다."""
+    print("=== 프롬프트 목록 ===")
+    if not prompts:
+        print("등록된 프롬프트가 없습니다. 먼저 프롬프트를 추가해주세요.")
+        return
+
+    print_prompt_lines(numbered(prompts))
+    print(f"\n총 {len(prompts)}개의 프롬프트")
+
+
 # ──────────────────────────────────────────
 # 메뉴 / 메인
 # ──────────────────────────────────────────
@@ -157,6 +185,7 @@ def get_menu_items():
     """(번호, 메뉴 이름, 실행할 함수) 목록을 반환한다."""
     return [
         ("1", "프롬프트 추가", add_prompt),
+        ("2", "프롬프트 목록", show_list),
     ]
 
 

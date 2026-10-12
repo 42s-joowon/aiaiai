@@ -2,8 +2,13 @@
 
 터미널에서 메뉴 번호를 입력해 프롬프트를 추가/조회/검색하고
 즐겨찾기를 관리하는 콘솔 프로그램입니다.
-데이터는 프로그램이 실행되는 동안에만 유지됩니다.
+데이터는 실행 중에만 유지되며, 'JSON 저장' 메뉴로 파일에 보관할 수 있습니다.
 """
+
+import json
+
+# 저장/불러오기에 사용할 JSON 파일 경로
+DATA_FILE = "prompts.json"
 
 # 미리 정의된 카테고리 목록
 CATEGORIES = ["텍스트 생성", "이미지 생성", "영상 생성", "페르소나", "자동화", "기타"]
@@ -342,6 +347,42 @@ def show_top(prompts, limit=5):
         print(f"{rank}위 ({prompt['views']}회) {format_prompt_line(number, prompt)}")
 
 
+
+def save_prompts(prompts, path=DATA_FILE):
+    """프롬프트 목록을 JSON 파일로 저장한다."""
+    print("=== JSON 저장 ===")
+    with open(path, "w", encoding="utf-8") as file:
+        json.dump(prompts, file, ensure_ascii=False, indent=2)
+    print(f"{len(prompts)}개의 프롬프트를 '{path}'에 저장했습니다.")
+
+
+def is_valid_prompt(item):
+    """JSON에서 읽은 항목이 프롬프트 형식인지 확인한다."""
+    required = ("title", "content", "category", "favorite")
+    return isinstance(item, dict) and all(key in item for key in required)
+
+
+def load_prompts(prompts, path=DATA_FILE):
+    """JSON 파일에서 프롬프트를 불러와 현재 목록을 교체한다."""
+    print("=== JSON 불러오기 ===")
+    try:
+        with open(path, encoding="utf-8") as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        print(f"'{path}' 파일이 없습니다. 먼저 'JSON 저장'을 실행해주세요.")
+        return
+    except json.JSONDecodeError:
+        print(f"'{path}' 파일 형식이 올바르지 않습니다.")
+        return
+
+    if not isinstance(data, list) or not all(is_valid_prompt(item) for item in data):
+        print(f"'{path}' 파일에 올바르지 않은 프롬프트 데이터가 있습니다.")
+        return
+
+    prompts[:] = data  # 같은 리스트 객체를 유지한 채 내용만 교체
+    print(f"'{path}'에서 {len(prompts)}개의 프롬프트를 불러왔습니다.")
+
+
 # ──────────────────────────────────────────
 # 메뉴 / 메인
 # ──────────────────────────────────────────
@@ -368,6 +409,8 @@ def get_menu_items():
         ("8", "프롬프트 수정", edit_prompt),
         ("9", "프롬프트 삭제", delete_prompt),
         ("10", "인기 프롬프트 TOP 5", show_top),
+        ("11", "JSON 저장", save_prompts),
+        ("12", "JSON 불러오기", load_prompts),
     ]
 
 

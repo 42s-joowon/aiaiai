@@ -103,3 +103,7 @@ git log --oneline --graph
 ```
 
 으로 병합 기록을 확인할 수 있습니다.
+
+## 제출 가이드
+
+개발 환경 설정·스크린샷 체크리스트와 Git 명령어/Python 문법 정리는 [docs/SUBMISSION_GUIDE.md](docs/SUBMISSION_GUIDE.md)에 있습니다.

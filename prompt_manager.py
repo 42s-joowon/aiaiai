@@ -192,6 +192,26 @@ def show_by_category(prompts):
     print(f"\n총 {len(results)}개의 프롬프트")
 
 
+
+def search_prompt(prompts):
+    """키워드가 제목 또는 내용에 포함된 프롬프트를 검색한다 (대소문자 무시)."""
+    print("=== 프롬프트 검색 ===")
+    keyword = input_required("검색어: ").lower()
+
+    results = [
+        (n, p) for n, p in numbered(prompts)
+        if keyword in p["title"].lower() or keyword in p["content"].lower()
+    ]
+
+    print("\n검색 결과:")
+    if not results:
+        print("검색 결과가 없습니다.")
+        return
+
+    print_prompt_lines(results)
+    print(f"\n{len(results)}개의 프롬프트를 찾았습니다.")
+
+
 # ──────────────────────────────────────────
 # 메뉴 / 메인
 # ──────────────────────────────────────────
@@ -211,6 +231,7 @@ def get_menu_items():
         ("1", "프롬프트 추가", add_prompt),
         ("2", "프롬프트 목록", show_list),
         ("3", "카테고리별 조회", show_by_category),
+        ("4", "프롬프트 검색", search_prompt),
     ]
 
 

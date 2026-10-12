@@ -136,6 +136,7 @@ def add_prompt(prompts):
         "content": content,
         "category": category,
         "favorite": False,
+        "views": 0,
     })
     print("\n프롬프트가 추가되었습니다!")
 
@@ -235,11 +236,13 @@ def show_detail(prompts):
         return
 
     prompt = prompts[index]
+    prompt["views"] = prompt.get("views", 0) + 1  # 상세 보기 = 사용 1회
     print()
     print(LINE)
     print(f"제목: {prompt['title']}")
     print(f"카테고리: {prompt['category']}")
     print(f"즐겨찾기: {'⭐' if prompt['favorite'] else '-'}")
+    print(f"조회수: {prompt['views']}회")
     print(LINE)
     print("내용:")
     print(prompt["content"])
@@ -325,6 +328,20 @@ def delete_prompt(prompts):
     print(f"'{title}' 프롬프트를 삭제했습니다.")
 
 
+
+def show_top(prompts, limit=5):
+    """조회수가 많은 순서대로 상위 프롬프트를 출력한다."""
+    print(f"=== 인기 프롬프트 TOP {limit} ===")
+    viewed = [(n, p) for n, p in numbered(prompts) if p.get("views", 0) > 0]
+    if not viewed:
+        print("아직 조회된 프롬프트가 없습니다. '상세 보기'로 프롬프트를 열어보세요.")
+        return
+
+    viewed.sort(key=lambda item: item[1]["views"], reverse=True)
+    for rank, (number, prompt) in enumerate(viewed[:limit], start=1):
+        print(f"{rank}위 ({prompt['views']}회) {format_prompt_line(number, prompt)}")
+
+
 # ──────────────────────────────────────────
 # 메뉴 / 메인
 # ──────────────────────────────────────────
@@ -350,6 +367,7 @@ def get_menu_items():
         ("7", "즐겨찾기 목록", show_favorites),
         ("8", "프롬프트 수정", edit_prompt),
         ("9", "프롬프트 삭제", delete_prompt),
+        ("10", "인기 프롬프트 TOP 5", show_top),
     ]
 
 

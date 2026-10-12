@@ -157,6 +157,17 @@ def numbered(prompts):
     return list(enumerate(prompts, start=1))
 
 
+def show_list(prompts):
+    """저장된 모든 프롬프트를 번호와 함께 출력한다."""
+    print("=== 프롬프트 목록 ===")
+    if not prompts:
+        print("등록된 프롬프트가 없습니다. 먼저 프롬프트를 추가해주세요.")
+        return
+
+    print_prompt_lines(numbered(prompts))
+    print(f"\n총 {len(prompts)}개의 프롬프트")
+
+
 # ──────────────────────────────────────────
 # 메뉴 / 메인
 # ──────────────────────────────────────────
@@ -174,6 +185,7 @@ def get_menu_items():
     """(번호, 메뉴 이름, 실행할 함수) 목록을 반환한다."""
     return [
         ("1", "프롬프트 추가", add_prompt),
+        ("2", "프롬프트 목록", show_list),
     ]
 
 

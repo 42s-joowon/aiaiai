@@ -178,7 +178,6 @@ def show_list(prompts):
     print(f"\n총 {len(prompts)}개의 프롬프트")
 
 
-
 def show_by_category(prompts):
     """카테고리를 선택하면 해당 카테고리의 프롬프트만 출력한다."""
     print("=== 카테고리별 조회 ===")
@@ -202,7 +201,6 @@ def show_by_category(prompts):
     print(f"\n총 {len(results)}개의 프롬프트")
 
 
-
 def search_prompt(prompts):
     """키워드가 제목 또는 내용에 포함된 프롬프트를 검색한다 (대소문자 무시)."""
     print("=== 프롬프트 검색 ===")
@@ -220,7 +218,6 @@ def search_prompt(prompts):
 
     print_prompt_lines(results)
     print(f"\n{len(results)}개의 프롬프트를 찾았습니다.")
-
 
 
 def input_prompt_index(prompts, label="번호 입력: "):
@@ -258,7 +255,6 @@ def show_detail(prompts):
     print(LINE)
 
 
-
 def toggle_favorite(prompts):
     """번호로 선택한 프롬프트의 즐겨찾기를 추가/해제한다."""
     print("=== 즐겨찾기 관리 ===")
@@ -276,7 +272,6 @@ def toggle_favorite(prompts):
         print(f"'{prompt['title']}' 프롬프트를 즐겨찾기에서 해제했습니다.")
 
 
-
 def show_favorites(prompts):
     """즐겨찾기된 프롬프트만 모아서 출력한다."""
     print("=== 즐겨찾기 목록 ===")
@@ -287,7 +282,6 @@ def show_favorites(prompts):
 
     print_prompt_lines(favorites)
     print(f"\n총 {len(favorites)}개의 즐겨찾기")
-
 
 
 def input_optional(label, current):
@@ -337,7 +331,6 @@ def delete_prompt(prompts):
     print(f"'{title}' 프롬프트를 삭제했습니다.")
 
 
-
 def show_top(prompts, limit=5):
     """조회수가 많은 순서대로 상위 프롬프트를 출력한다."""
     print(f"=== 인기 프롬프트 TOP {limit} ===")
@@ -349,7 +342,6 @@ def show_top(prompts, limit=5):
     viewed.sort(key=lambda item: item[1]["views"], reverse=True)
     for rank, (number, prompt) in enumerate(viewed[:limit], start=1):
         print(f"{rank}위 ({prompt['views']}회) {format_prompt_line(number, prompt)}")
-
 
 
 def save_prompts(prompts, path=DATA_FILE):
@@ -385,7 +377,6 @@ def load_prompts(prompts, path=DATA_FILE):
 
     prompts[:] = data  # 같은 리스트 객체를 유지한 채 내용만 교체
     print(f"'{path}'에서 {len(prompts)}개의 프롬프트를 불러왔습니다.")
-
 
 
 def to_filename(category):

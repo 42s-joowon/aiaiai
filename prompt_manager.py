@@ -6,9 +6,13 @@
 """
 
 import json
+import os
 
 # 저장/불러오기에 사용할 JSON 파일 경로
 DATA_FILE = "prompts.json"
+
+# Markdown 내보내기 폴더
+EXPORT_DIR = "exports"
 
 # 미리 정의된 카테고리 목록
 CATEGORIES = ["텍스트 생성", "이미지 생성", "영상 생성", "페르소나", "자동화", "기타"]
@@ -383,6 +387,41 @@ def load_prompts(prompts, path=DATA_FILE):
     print(f"'{path}'에서 {len(prompts)}개의 프롬프트를 불러왔습니다.")
 
 
+
+def to_filename(category):
+    """카테고리 이름을 파일 이름으로 쓸 수 있게 바꾼다."""
+    name = category.strip().replace(" ", "_")
+    for char in '\\/:*?"<>|':
+        name = name.replace(char, "")
+    return name or "기타"
+
+
+def export_markdown(prompts, folder=EXPORT_DIR):
+    """프롬프트를 카테고리별 Markdown 파일로 내보낸다."""
+    print("=== Markdown 내보내기 ===")
+    if not prompts:
+        print("내보낼 프롬프트가 없습니다.")
+        return
+
+    os.makedirs(folder, exist_ok=True)
+    for category in get_categories(prompts):
+        items = [p for p in prompts if p["category"] == category]
+        if not items:
+            continue
+
+        lines = [f"# {category}", ""]
+        for prompt in items:
+            star = " ⭐" if prompt["favorite"] else ""
+            lines += [f"## {prompt['title']}{star}", "", "```", prompt["content"], "```", ""]
+
+        path = os.path.join(folder, f"{to_filename(category)}.md")
+        with open(path, "w", encoding="utf-8") as file:
+            file.write("\n".join(lines))
+        print(f"- {path} ({len(items)}개)")
+
+    print(f"\n'{folder}' 폴더로 내보내기를 완료했습니다.")
+
+
 # ──────────────────────────────────────────
 # 메뉴 / 메인
 # ──────────────────────────────────────────
@@ -411,6 +450,7 @@ def get_menu_items():
         ("10", "인기 프롬프트 TOP 5", show_top),
         ("11", "JSON 저장", save_prompts),
         ("12", "JSON 불러오기", load_prompts),
+        ("13", "Markdown 내보내기", export_markdown),
     ]
 
 
